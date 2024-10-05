@@ -1,3 +1,5 @@
+import sys
+
 debug = 0
 
 def gcd(a, b):
@@ -23,14 +25,35 @@ def encrypt(m, e, n):
 def decrypt(c, d, n):
     return mod_exp(c, d, n)
 
-def keygen():
+def dkey(e, n):
+    p = 0
+    q = 0
+    # factorize n by testing from square root
+    tmp = n ** (1/2)
+    # round tmp to whole number
+    tmp = int(tmp)
+    while(tmp > 0):
+        if(n % tmp == 0):
+            p = tmp
+            q = int(n/tmp)
+            if(debug):
+                print("p: ", p, " q: ", q)
+            # phi function: (p-1)(q-1)
+            phin = int((p-1)*(q-1))
+            if(debug):
+                print("phi(n): ", phin)
+            # d = e^-1 mod phi(n)
+            d = pow(e, -1, phin)
+            return d
+        tmp -= 1
     return 0
+
 
 # p , q
 # n = p * q
-# r = (p-1)(q-1)
+# phi(n) = (p-1)(q-1)
 # e = 3, 5, 17, 65537 (can be others)
-# d = e^-1 mod r
+# d = e^-1 mod phi(n)
 # public key: e,n
 # private key: d
 # LCM(a,b) = a*b / GCD(a,b)
@@ -38,5 +61,7 @@ def keygen():
 # decryption: c^d mod(n)
 
 
+#for line in sys.stdin:
+#    line = line.strip()
+#    print(line)
 
-print(mod_exp(76,11,5183))
