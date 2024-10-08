@@ -68,10 +68,7 @@ lines = []
 for line in sys.stdin.buffer:
     line = line.decode('latin1')
     lines.append(line)
-
-# for i in range(0, len(lines)):
-#     sys.stdout.buffer.write(lines[i].encode('latin1'))
-
+    
 ciphertext = ''
 for i in range(0, len(lines)-1):
     ciphertext += lines[i]

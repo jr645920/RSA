@@ -71,7 +71,6 @@ def bchunks(i):
 #separating input strings
 lines = []
 for line in sys.stdin:
-    #line = line.strip('\n')
     lines.append(line)
     
 #get the public key from input
@@ -79,9 +78,6 @@ pub = get_nums(lines[1]) # or just line
 e = pub[0]
 n = pub[1]
 d = dkey(e, n)
-
-#opening file in binary to match test case output
-#f = open('encryption_output.txt', 'wb')
 
 #printing the log to stderr and output to stdout
 print("Message in ASCII code: [", end="", file=sys.stderr)
@@ -97,12 +93,8 @@ for i in range(0, len(lines[0])-2):
     print(c, end=", ", file=sys.stderr)
     #splitting into byte chunks for padding
     chunks = bchunks(c)
-    # ciphertext = ""
     for t in chunks:
-        #print(chr(t), end="")
-        # ciphertext += chr(t)
         #encoded to latin1 to match the binary of test case output
-        #f.write(chr(t).encode('latin1')) #file option
         sys.stdout.buffer.write(chr(t).encode('latin1')) #stdout option
 #last character is treated differently due to log output
 c = encrypt(ord(lines[0][len(lines[0])-2]), e, n)
@@ -111,7 +103,5 @@ print("]", file=sys.stderr)
 #Last character to latin1 to match the test case output
 chunks = bchunks(c)
 for t in chunks:
-    #f.write(chr(t).encode('latin1')) #file option
     sys.stdout.buffer.write(chr(t).encode('latin1')) #stdout option
-
-#f.close()
+    
