@@ -18,7 +18,7 @@ def encrypt(m, e, n):
 
 # decryption: c^d mod(n)
 def decrypt(c, d, n):
-    return mod_exp(c, d, n)
+    return pow(c, d, n)
 
 # private key: d
 def dkey(e, n):
